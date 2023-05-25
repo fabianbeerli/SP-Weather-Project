@@ -3,7 +3,7 @@ import random
 
 
 # returns list of random cities
-def getRandomCities(num_cities):
+def get_random_cities(num_cities):
     gc = GeonamesCache()
     cities = list(gc.get_cities().values())
 
