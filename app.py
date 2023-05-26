@@ -23,3 +23,6 @@ def plot():
     df = show_current_weather(city_name=city_name)
     correlation_graph = get_data_for_correlation(city_name=city_name)
     return render_template('index.html', cities=cities, forecast_graph=forecast_graph, dataframe=df.to_html(index=False), correlation_graph=correlation_graph)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
