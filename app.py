@@ -1,12 +1,14 @@
 import base64
 import io
 import sqlite3
+import os
 from flask import Flask, jsonify, render_template, request
 from main import get_cities_weather_data, show_current_weather, show_graph, get_data_for_correlation
 import matplotlib.pyplot as plt
 
 
 app = Flask(__name__)
+port = int(os.environ.get('PORT', 5000))
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -24,5 +26,5 @@ def plot():
     correlation_graph = get_data_for_correlation(city_name=city_name)
     return render_template('index.html', cities=cities, forecast_graph=forecast_graph, dataframe=df.to_html(index=False), correlation_graph=correlation_graph)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+app.run(host='0.0.0.0', port=port)
