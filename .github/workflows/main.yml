@@ -31,11 +31,18 @@ jobs:
 
       - name: Log in to Heroku
         run: |
-          echo "02b9b932-f235-4459-a87e-bd1026de0ad9" | docker login --username=_ --password-stdin registry.heroku.com
+          echo "fc953b92-4530-41e1-9773-ae2ee5d242ea" | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Push Docker image to Heroku
         run: heroku container:push web -a weather-project
+        if: ${{ success() }}
+        else:
+          run: exit 1
 
       - name: Release Docker image on Heroku
         run: heroku container:release web -a weather-project
+        if: ${{ success() }}
+        else:
+          run: exit 1
+
 
