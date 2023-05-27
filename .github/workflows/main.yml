@@ -30,7 +30,7 @@ jobs:
         run: docker build -t weather-project .
 
       - name: Log in to Heroku
-        run: heroku login --username=faebebee@gmail.com --password=Juanfabian12. registry.heroku.com
+        run: heroku login --interactive --username=faebebee@gmail.com
 
 
       - name: Push Docker image to Heroku
