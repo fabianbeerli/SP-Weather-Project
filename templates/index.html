@@ -1,40 +1,54 @@
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>weather data</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .container {
+            text-align: center;
+        }
+        
+        table {
+            margin: 0 auto;
+        }
+        h2 {
+            margin-top: 50px;
+        }
+    </style>
+    <title>Weather Data</title>
 </head>
-
 <body>
-    <h1>Welcome to weather data</h1>
-    <form action="{{ url_for('plot') }}" method="post">
-        {% for city in cities %}
-        <button type="submit" name="button" value="{{ city.city_name }}">{{ city.city_name }}</button>
-        {% endfor %}
-    </form>
-    {% if forecast_graph is defined %}
-        <h1>The forecast graph</h1>
-        <img src="data:image/png;base64,{{ forecast_graph }}" alt="the forecast plot">
-        <form action="{{ url_for('save_graph') }}" method="post">
-            <input type="hidden" name="forecast_graph" value="{{ forecast_graph }}">
-            <button type="submit">Save Graph</button>
-        </form>
-    {% endif %}
-    
-    {% if dataframe %}
-    <h1>Current Weather</h1>
-        {{ dataframe | safe }}
-    {% endif %}
-
-    {% if correlation_graph %}
-        <h1>Correlation graph</h1>
-        <img src="data:image/png;base64,{{ correlation_graph }}" alt="the correlation plot">
-    {% endif %}
-    <script>
-
-    </script>
+    <div class="container">
+        <header>
+            <h1>Welcome to Weather Data</h1>
+            <p>Select the city you want to see weather data from:</p>
+            <form action="{{ url_for('plot') }}" method="post">
+                {% for city in cities %}
+                <button type="submit" name="button" value="{{ city.city_name }}">
+                    {{ city.city_name }}
+                </button>
+                {% endfor %}
+            </form>
+        </header>
+        <main>
+            {% if dataframe %}
+                <h2>Current Weather</h2>
+                {{ dataframe | safe }}
+            {% endif %}
+            {% if forecast_graph is defined %}
+                <h2>The forecast graph</h2>
+                <img src="data:image/png;base64,{{ forecast_graph }}" alt="The forecast plot">
+                <form action="{{ url_for('save_graph') }}" method="post">
+                    <input type="hidden" name="forecast_graph" value="{{ forecast_graph }}">
+                    <button type="submit">Save Graph</button>
+                </form>
+            {% endif %}
+            {% if correlation_graph %}
+                <h2>Correlation graph</h2>
+                <img src="data:image/png;base64,{{ correlation_graph }}" alt="The correlation plot">
+            {% endif %}
+        </main>
+    </div>
 </body>
-
 </html>
