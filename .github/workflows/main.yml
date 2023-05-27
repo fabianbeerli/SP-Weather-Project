@@ -36,11 +36,7 @@ jobs:
       - name: Push Docker image to Heroku
         run: heroku container:push web -a weather-project
         if: ${{ success() }}
-        else:
-          run: exit 1
 
       - name: Release Docker image on Heroku
         run: heroku container:release web -a weather-project
         if: ${{ success() }}
-        else:
-          run: exit 1
