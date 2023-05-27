@@ -1,36 +1,7 @@
-name: Python CI/CD
+build:
+  docker:
+    web: ./weather-project
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-
-      - name: Build Docker image
-        run: docker build -t weather-project .
-
-      - name: Push Docker image to Heroku
-        run: heroku container:push web -a weather-project
-
-      - name: Release Docker image on Heroku
-        run: heroku container:release web -a weather-project
+release:
+  image: web
+  app: weather-project
