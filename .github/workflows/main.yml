@@ -12,6 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Build Docker image
         run: docker build -t weather-project .
@@ -24,4 +32,3 @@ jobs:
 
       - name: Release Docker image on Heroku
         run: heroku container:release web
-
