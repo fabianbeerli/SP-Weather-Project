@@ -6,7 +6,8 @@ def main(db_file):
 
     create_weather_forecast_table = """ CREATE TABLE IF NOT EXISTS graphs(
                                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                        graph BLOB
+                                        graph BLOB,
+                                        city_name text
                                         ); """
 
     conn = create_connection(db_file)

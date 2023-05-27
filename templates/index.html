@@ -1,23 +1,32 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         .container {
             text-align: center;
         }
-        
+
         table {
             margin: 0 auto;
         }
+
         h2 {
             margin-top: 50px;
+        }
+
+        ul {
+            width: 100px;
+            margin: 0 auto;
         }
     </style>
     <title>Weather Data</title>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -33,22 +42,31 @@
         </header>
         <main>
             {% if dataframe %}
-                <h2>Current Weather</h2>
-                {{ dataframe | safe }}
+            <h2>Current Weather</h2>
+            {{ dataframe | safe }}
             {% endif %}
             {% if forecast_graph is defined %}
-                <h2>The forecast graph</h2>
-                <img src="data:image/png;base64,{{ forecast_graph }}" alt="The forecast plot">
-                <form action="{{ url_for('save_graph') }}" method="post">
-                    <input type="hidden" name="forecast_graph" value="{{ forecast_graph }}">
-                    <button type="submit">Save Graph</button>
-                </form>
+            <h2>The forecast graph</h2>
+            <img src="data:image/png;base64,{{ forecast_graph }}" alt="The forecast plot">
+            <form action="{{ url_for('save_graph') }}" method="post">
+                <input type="hidden" name="forecast_graph" value="{{ forecast_graph }}">
+                <button type="submit">Save Graph</button>
+            </form>
             {% endif %}
             {% if correlation_graph %}
-                <h2>Correlation graph</h2>
-                <img src="data:image/png;base64,{{ correlation_graph }}" alt="The correlation plot">
+            <h2>Correlation graph</h2>
+            <img src="data:image/png;base64,{{ correlation_graph }}" alt="The correlation plot">
+            {% endif %}
+            {% if saved_graphs %}
+            <h1>List of Saved Graphs</h1>
+            <ul>
+                {% for graph in saved_graphs %}
+                    <li><a href="{{ url_for('view_saved_graph', graph_id=graph.id) }}">{{ graph.city_name }}</a></li>
+                {% endfor %}
+            </ul>
             {% endif %}
         </main>
     </div>
 </body>
+
 </html>
