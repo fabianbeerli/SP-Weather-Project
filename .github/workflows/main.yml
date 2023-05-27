@@ -44,5 +44,3 @@ jobs:
         if: ${{ success() }}
         else:
           run: exit 1
-
-
