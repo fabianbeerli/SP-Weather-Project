@@ -2,40 +2,22 @@ import sqlite3
 from sqlite3 import Error
 
 
-def main():
-    database = r"weather_db.db"
-    create_weather_snapshot_table = """ CREATE TABLE IF NOT EXISTS weather_snapshots (
-                                            id integer PRIMARY KEY,
-                                            city_name text NOT NULL,
-                                            curr_temp real NOT NULL,
-                                            max_temp real NOT NULL,
-                                            min_temp real NOT NULL,
-                                            sea_level integer NOT NULL,
-                                            humidity text NOT NULL,
-                                            sunrise text NOT NULL,
-                                            sunset text NOT NULL
+def main(db_file):
+
+    create_weather_forecast_table = """ CREATE TABLE IF NOT EXISTS graphs(
+                                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        graph BLOB
                                         ); """
 
-    create_weather_forecast_table = """ CREATE TABLE IF NOT EXISTS weather_forecasts (
-                                            id integer PRIMARY KEY,
-                                            forecast_city_name text NOT NULL,
-                                            forecast_curr_temp real NOT NULL,
-                                            forecast_max_temp real NOT NULL,
-                                            forecast_min_temp real NOT NULL,
-                                            forecast_sea_level integer NOT NULL,
-                                            forecast_humidity text NOT NULL,
-                                            forecast_sunrise text NOT NULL,
-                                            forecast_sunset text NOT NULL,
-                                            forecast_date text NOT NULL
-                                        ); """
-
-    conn = create_connection(database)
+    conn = create_connection(db_file)
 
     if conn is not None:
-        create_table(conn, create_weather_snapshot_table)
         create_table(conn, create_weather_forecast_table)
+        return conn
     else:
         print("Error when connecting to db")
+    
+    return conn
 
 
 def create_table(conn, create_table_sql):
@@ -57,5 +39,3 @@ def create_connection(db_file):
 
     return conn
 
-if __name__ == '__main__':  
-    main()

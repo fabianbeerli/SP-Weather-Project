@@ -17,6 +17,10 @@
     {% if forecast_graph is defined %}
         <h1>The forecast graph</h1>
         <img src="data:image/png;base64,{{ forecast_graph }}" alt="the forecast plot">
+        <form action="{{ url_for('save_graph') }}" method="post">
+            <input type="hidden" name="forecast_graph" value="{{ forecast_graph }}">
+            <button type="submit">Save Graph</button>
+        </form>
     {% endif %}
     
     {% if dataframe %}
