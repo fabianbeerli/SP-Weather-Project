@@ -74,7 +74,7 @@ def view_saved_graph(graph_id):
     
     cursor.close()
     conn.close()
-    return render_template("my_saved_graph.html", graph_base64=graph_base64, city_name=city_name)
+    return render_template("graph.html", graph_base64=graph_base64)
 
 
 
