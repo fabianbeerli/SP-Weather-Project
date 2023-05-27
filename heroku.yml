@@ -3,5 +3,6 @@ build:
     web: ./weather-project
 
 release:
-  image: web
-  app: weather-project
+  commands:
+    - heroku container:push web -a weather-project
+    - heroku container:release web -a weather-project
