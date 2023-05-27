@@ -22,7 +22,7 @@ def index():
     saved_graphs = fetch_graphs_from_db()
     return render_template('index.html', cities=cities, saved_graphs=saved_graphs)
 
-#  This function receives a POST request, calls several functions to generate and retrieve graph and weather data based on the selected city,
+#  This function receives a POST request, calls several functions to generate and retrieve graph and weather data based on the selected city, 
 #  and then renders the 'index.html' template with the cities, forecast graph, weather data, and correlation graph as variables to be displayed on the webpage
 @app.route('/plot', methods=['POST'])
 def plot():
