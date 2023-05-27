@@ -34,7 +34,7 @@ jobs:
           echo "02b9b932-f235-4459-a87e-bd1026de0ad9" | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Push Docker image to Heroku
-        run: heroku container:push web
+        run: heroku container:push web -a weather-project
 
       - name: Release Docker image on Heroku
         run: heroku container:release web
