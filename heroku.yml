@@ -1,8 +1,0 @@
-build:
-  docker:
-    web: ./weather-project
-
-release:
-  commands:
-    - heroku container:push web -a weather-project
-    - heroku container:release web -a weather-project

@@ -34,4 +34,12 @@ jobs:
         with:
           name: docker-image
           path: ./weather-project
+          
+      - name: Log in to Heroku
+        run: heroku container:login
 
+      - name: Push Docker image to Heroku
+        run: heroku container:push web -a <your-app-name>
+
+      - name: Release Docker image on Heroku
+        run: heroku container:release web -a <your-app-name>
