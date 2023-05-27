@@ -11,7 +11,8 @@ from database.script import main, create_connection
 app = Flask(__name__)
 port = int(os.environ.get('PORT', 5000))
 
-
+# This function serves as the main route of the web application. It sets up the initial state by initializing the database, retrieving weather data for cities, and fetching saved graphs from the database. 
+# It then renders the 'index.html' template, passing the cities and saved graphs as variables to be displayed on the webpage.
 @app.route('/', methods=['POST', 'GET'])
 def index():
     global database
@@ -21,7 +22,8 @@ def index():
     saved_graphs = fetch_graphs_from_db()
     return render_template('index.html', cities=cities, saved_graphs=saved_graphs)
 
-
+#  This function receives a POST request, calls several functions to generate and retrieve graph and weather data based on the selected city,
+#  and then renders the 'index.html' template with the cities, forecast graph, weather data, and correlation graph as variables to be displayed on the webpage
 @app.route('/plot', methods=['POST'])
 def plot():
     main(database)
@@ -39,14 +41,14 @@ def plot():
                             correlation_graph=correlation_graph
                         )
 
-
+# This function receives a POST request containing a base64-encoded image of a graph, saves it to the database, and then redirects the user to the '/display_graph' route to view the saved graph
 @app.route('/save_graph', methods=['POST'])
 def save_graph():
     base64_img = request.form["forecast_graph"]
     save_graph_to_database(base64_img)
     return redirect('/display_graph')
 
-
+# This function retrieves a graph from the database and displays it in a web page if found; otherwise, it returns a message indicating that no graph was found in the database
 @app.route('/display_graph', methods=['GET'])
 def display_graph():
     graph_bytes = retrieve_graph_from_database()
@@ -57,7 +59,7 @@ def display_graph():
     else:
         return "No graph found in the database."
 
-
+# This function retrieves a saved graph from the database based on the provided graph ID and displays it in a web page
 @app.route('/view_saved_graph/<int:graph_id>', methods=['GET'])
 def view_saved_graph(graph_id):
     conn = create_connection(database)
@@ -76,9 +78,7 @@ def view_saved_graph(graph_id):
     conn.close()
     return render_template("graph.html", graph_base64=graph_base64)
 
-
-
-
+# retieve graph from database
 def retrieve_graph_from_database():
     conn = create_connection(database)
 
@@ -94,7 +94,7 @@ def retrieve_graph_from_database():
     conn.close()
     return None
 
-
+# save graph to database
 def save_graph_to_database(graph_base64):
     # Convert base64 string to bytes
     graph_bytes = base64.b64decode(graph_base64)
@@ -109,6 +109,7 @@ def save_graph_to_database(graph_base64):
     conn.commit()
     conn.close()
 
+# fetch the graphs form the database
 def fetch_graphs_from_db():
     conn = create_connection(database)
 

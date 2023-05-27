@@ -57,6 +57,7 @@ def get_geo_response(city):
             print(f"error while opening url: {str(e)}")
             return None
 
+# get random cities with their coordinations
 def get_cities_coords(num_cities):
     city_coords = []
     cities = get_random_cities(num_cities)
@@ -75,6 +76,7 @@ def get_cities_coords(num_cities):
 
     return city_coords
 
+# return weather info of city
 def get_weather_data_with_coords(lat, lon):
     url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}"
     # Send a request to the API and retrieve weather data for the coordinates
@@ -96,8 +98,8 @@ def get_weather_data_with_coords(lat, lon):
 
     return city_dict
 
+# trial and error mit der anzahl cities, gemäss docs gehen 60 calls/min mit dem free plan
 def get_cities_weather_data():
-    # trial and error mit der anzahl cities, gemäss docs gehen 60 calls/min mit dem free plan
     city_coords = get_cities_coords(10)
     global city_list
     city_list = []
@@ -110,6 +112,7 @@ def get_cities_weather_data():
 
     return city_list
 
+#get forecast data from api for a specific city
 def get_forecast_data_with_coords(lat, lon):
     url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={api_key}"
     # Send a request to the API and retrieve forecast data for the coordinates
@@ -117,7 +120,7 @@ def get_forecast_data_with_coords(lat, lon):
     forecast_data = json.loads(response.read())
     return forecast_data
 
-
+# return dataframe with weather data for city
 def show_current_weather(city_name):
     city = next((c for c in city_list if c["city_name"] == city_name), None)
     if city is not None:
@@ -142,6 +145,7 @@ def show_current_weather(city_name):
         # Display the DataFrame
         return df
 
+# return plot for weather forecast
 def show_graph(city_name):
     # Clear the current figure
     plt.figure()
@@ -210,7 +214,7 @@ def get_data_for_correlation(city_name):
         return correlation_graph
 
 
-
+# return plot for linear correlation
 def plot_linear_correlation(df):
 
     sea_levels = df["sea_level"]
