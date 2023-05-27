@@ -1,45 +1,31 @@
-name: Python CI/CD
+name: Deploy to Heroku
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
 
       - name: Build Docker image
         run: docker build -t weather-project .
+      
+      - name: Save Docker image
+        run: docker save -o weather-project.tar weather-project
 
-      - name: Save Docker image as artifact
-        uses: actions/upload-artifact@v2
+      - name: Build, Push and Release a Docker container to Heroku
+        uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
-          name: docker-image
-          path: ./weather-project
-          
-      - name: Log in to Heroku
-        run: heroku container:login
-
-      - name: Push Docker image to Heroku
-        run: heroku container:push web -a <your-app-name>
-
-      - name: Release Docker image on Heroku
-        run: heroku container:release web -a <your-app-name>
+          email: faebebee@gmail.com
+          heroku_api_key: ef74d377-97d2-4c94-9e07-f64a43b4f021
+          heroku_app_name: murmuring-lake-77657
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+          docker_image_path: ./weather-project.tar
