@@ -12,7 +12,7 @@ app = Flask(__name__)
 port = int(os.environ.get('PORT', 5000))
 
 # This function serves as the main route of the web application. It sets up the initial state by initializing the database, retrieving weather data for cities, and fetching saved graphs from the database. 
-# It then renders the 'index.html' template, passing the cities and saved graphs as variables to be displayed on the webpage.
+# It then renders the 'index.html' template, passing the cities and saved graphs as variables to be displayed on the webpage. 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     global database
