@@ -165,7 +165,7 @@ def show_graph(city_name):
         filtered_datetimes = []
         prev_date = None
         for dt in datetimes:
-            date = dt.split()[0]  # Extract date from datetime string
+            date = dt.split()[0]  # Extract date from datetime string 
             if date != prev_date:
                 filtered_datetimes.append(dt)
                 prev_date = date
