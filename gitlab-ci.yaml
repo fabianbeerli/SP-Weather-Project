@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t weather-project .
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - heroku login --username=faebebee@gmail.com --password=Juanfabian12. https://murmuring-lake-77657.herokuapp.com/
+    - heroku create
+    - heroku container:login
+    - heroku container:push web
+    - heroku container:release web
