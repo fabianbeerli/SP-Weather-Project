@@ -28,18 +28,3 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t weather-project .
-
-      - name: Log in to Heroku
-        run: heroku login --email=faebebee@gmail.com --password=ef74d377-97d2-4c94-9e07-f64a43b4f021
-        env:
-          HEROKU_API_KEY: ef74d377-97d2-4c94-9e07-f64a43b4f021
-
-
-
-      - name: Push Docker image to Heroku
-        run: heroku container:push web -a weather-project
-        if: ${{ success() }}
-
-      - name: Release Docker image on Heroku
-        run: heroku container:release web -a weather-project
-        if: ${{ success() }}
