@@ -37,4 +37,5 @@ jobs:
         run: heroku container:push web -a weather-project
 
       - name: Release Docker image on Heroku
-        run: heroku container:release web
+        run: heroku container:release web -a weather-project
+
