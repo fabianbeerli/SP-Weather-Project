@@ -3,7 +3,7 @@ import io
 import sqlite3
 import os
 from flask import Flask, jsonify, redirect, render_template, request
-from main import get_cities_weather_data, show_current_weather, show_graph, get_data_for_correlation
+from main import get_cities_weather_data, show_current_weather, get_forecast_graph, get_data_for_correlation
 import matplotlib.pyplot as plt
 from database.script import main, create_connection
 
@@ -30,7 +30,7 @@ def plot():
     global city_name
     city_name = request.form["button"]
     global forecast_graph
-    forecast_graph = show_graph(city_name=city_name)
+    forecast_graph = get_forecast_graph(city_name=city_name)
     global df
     df = show_current_weather(city_name=city_name)
     global correlation_graph

@@ -146,7 +146,7 @@ def show_current_weather(city_name):
         return df
 
 # return plot for weather forecast
-def show_graph(city_name):
+def get_forecast_graph(city_name):
     # Clear the current figure
     plt.figure()
 
